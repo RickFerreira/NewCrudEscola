@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>Escola</display-name>
+  <welcome-file-list>
+    <welcome-file>/public/login.xhtml</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>dot-luv</param-value>
+  </context-param>
+  <session-config>
+    <session-timeout>1</session-timeout>
+  </session-config>
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <realm-name>escolaJdbcRealm</realm-name>
+    <form-login-config>
+      <form-login-page>/public/login.xhtml</form-login-page>
+      <form-error-page>/public/login.xhtml?error=true</form-error-page>
+    </form-login-config>
+  </login-config>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Protect</web-resource-name>
+      <description></description>
+      <url-pattern>/private/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <description></description>
+      <role-name>PROF</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  <security-role>
+    <role-name>PROF</role-name>
+  </security-role>
+</web-app>

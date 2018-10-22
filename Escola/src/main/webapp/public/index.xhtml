@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<h:head>
+	<title>Escola</title>
+</h:head>
+
+<h:body>
+	<h:form id="formMenu">
+		<p:menubar>
+			<f:facet name="options">
+						#{professorBean.userLogin}
+						<p:commandButton id="menuItemLogout" value="Logout"
+					icon="fa fa-fw fa-sign-out"
+					action="#{professorBean.efetuarLogout()}" ajax="false" />
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<p:megaMenu orientation="horizontal" style="margin-top:20px">
+		<p:submenu label="Cadastro" icon="ui-icon-disk"
+			rendered="#{professorBean.isUserInRole('PROF')}">
+			<p:column>
+				<p:submenu label="Cadastros de entidadaes">
+					<p:menuitem icon="ui-icon-disk" value="Create Professor"
+						url="/private/createProfessor.xhtml" />
+					<p:menuitem icon="ui-icon-disk" value="Create Aluno"
+						url="/private/createAluno.xhtml" />
+					<p:menuitem icon="ui-icon-disk" value="Create Disciplina"
+						url="/private/createDisciplina.xhtml" />
+					<p:menuitem icon="ui-icon-disk" value="Create Turma"
+						url="/private/createTurma.xhtml" />
+					<p:menuitem icon="ui-icon-disk" value="Matricula disciplina"
+						url="/private/matriculaDisciplina.xhtml" />
+
+				</p:submenu>
+
+			</p:column>
+
+		</p:submenu>
+		<p:submenu label="Visualizar" icon="ui-icon-search">
+			<p:column>
+				<p:submenu label="Visualizar entidades">
+					<p:menuitem icon="ui-icon-search" value="Alunos cadastrados"
+						url="/private/alunosCadastrados.xhtml"
+						rendered="#{professorBean.isUserInRole('PROF')}" />
+					<p:menuitem icon="ui-icon-search" value="Turmas cadastradas"
+						url="/public/turmasCadastradas.xhtml" />
+					<p:menuitem icon="ui-icon-search" value="Profs. cadastrados"
+						url="/public/professoresCadastrados.xhtml" />
+					<p:menuitem icon="ui-icon-search" value="Disc. cadastrados"
+						url="/public/disciplinasCadastradas.xhtml	" />
+				</p:submenu>
+
+			</p:column>
+
+		</p:submenu>
+
+	</p:megaMenu>
+
+
+	<h:form id="form">
+		<p:growl id="growl" showDetail="true" sticky="true" />
+		<p:messages>
+		</p:messages>
+
+
+	</h:form>
+	<!-- <marquee scrollamount="40">
+		<h1 style="font-size: 100px; color: blue; text-align: left;">Monta ai comedia</h1>
+		<h:graphicImage url="/images/pc.jpg"/>
+	</marquee> -->
+
+</h:body>
+</html>

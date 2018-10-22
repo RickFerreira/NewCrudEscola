@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title>Cadastrar disciplina</title>
+</h:head>
+
+<h:body>
+	<h:form id="formMenu">
+		<p:menubar>
+			<f:facet name="options">
+						#{professorBean.userLogin}
+						<p:commandButton id="menuItemLogout" value="Logout"
+					icon="fa fa-fw fa-sign-out"
+					action="#{professorBean.efetuarLogout()}" ajax="false" />
+			</f:facet>
+		</p:menubar>
+
+		<p:megaMenu orientation="horizontal" style="margin-top:20px">
+			<p:submenu label="Cadastro" icon="ui-icon-disk"
+				rendered="#{professorBean.isUserInRole('PROF')}">
+				<p:column>
+					<p:submenu label="Cadastros de entidadaes">
+						<p:menuitem icon="ui-icon-disk" value="Create Professor"
+							url="/private/createProfessor.xhtml" />
+						<p:menuitem icon="ui-icon-disk" value="Create Aluno"
+							url="/private/createAluno.xhtml" />
+						<p:menuitem icon="ui-icon-disk" value="Create Disciplina"
+							url="/private/createDisciplina.xhtml" />
+						<p:menuitem icon="ui-icon-disk" value="Create Turma"
+							url="/private/createTurma.xhtml" />
+						<p:menuitem icon="ui-icon-disk" value="Matricula disciplina"
+							url="/private/matriculaDisciplina.xhtml" />
+
+					</p:submenu>
+
+				</p:column>
+
+			</p:submenu>
+			<p:submenu label="Visualizar" icon="ui-icon-search">
+				<p:column>
+					<p:submenu label="Visualizar entidades">
+						<p:menuitem icon="ui-icon-search" value="Alunos cadastrados"
+							url="/private/alunosCadastrados.xhtml"
+							rendered="#{professorBean.isUserInRole('PROF')}" />
+						<p:menuitem icon="ui-icon-search" value="Turmas cadastradas"
+							url="/public/turmasCadastradas.xhtml" />
+						<p:menuitem icon="ui-icon-search" value="Professores cadastrados"
+							url="/public/professoresCadastrados.xhtml" />
+						<p:menuitem icon="ui-icon-search" value="Disciplinas cadastradas"
+							url="/public/disciplinasCadastradas.xhtml	" />
+					</p:submenu>
+
+				</p:column>
+
+			</p:submenu>
+			<f:facet name="options">
+				<p:menuitem value="#{professorBean.userLogin}" />
+
+			</f:facet>
+
+		</p:megaMenu>
+	</h:form>
+
+	<h:form id="form">
+		<p:growl id="growl" showDetail="true" sticky="true" />
+
+		<p:panelGrid style="margin-botton:20px" columns="2" layout="grid">
+			<p:outputLabel value="Nome da disciplina:" />
+			<p:inputText id="nomeDisc" label="nome"
+				value="#{disciplinaBean.disciplina.nome}" style="width:350px"
+				required="true" />
+
+			<p:outputLabel value="Descricao: " />
+			<p:inputText id="descriDis" label="descr"
+				value="#{disciplinaBean.disciplina.descri}" style="width:350px"
+				required="true" />
+
+			<p:outputLabel value="Professor: " />
+			<p:selectOneMenu value="#{disciplinaBean.disciplina.prof.id}"
+				required="true">
+				<f:selectItems var="prof" value="#{professorBean.profs}"
+					itemLabel="#{prof.nome}" itemValue="#{prof.id}">
+				</f:selectItems>
+			</p:selectOneMenu>
+
+		</p:panelGrid>
+
+		<p:commandButton value="Salvar Disciplina" update="growl: form"
+			action="#{disciplinaBean.salvarDisc()}">
+		</p:commandButton>
+
+	</h:form>
+</h:body>
+</html>
